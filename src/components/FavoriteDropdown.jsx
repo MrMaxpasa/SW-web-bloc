@@ -1,37 +1,27 @@
-import React, { useState } from 'react'
-import { useFavorites } from '../context/FavoritesContext'
-import { Link } from 'react-router-dom'
+// src/components/FavoriteDropdown.jsx
+import React from 'react';
+import { Dropdown, Badge } from 'react-bootstrap';
+import { useFavorites } from '../context/FavoritesContext';
+import { Link } from 'react-router-dom';
 
 export default function FavoriteDropdown() {
-    const { favorites } = useFavorites()
-    const [open, setOpen] = useState(false)
+  const { favorites } = useFavorites();
 
-    return (
-        <div className="relative">
-            <button
-                onClick={() => setOpen(!open)}
-                className="px-4 py-2 bg-blue-600 text-white rounded"
-            >
-                Mis Favoritos ({favorites.length})
-            </button>
-            {open && (
-                <ul className="absolute mt-2 bg-white shadow-lg rounded w-48">
-                    {favorites.length === 0 ? (
-                        <li className="p-2">Sin favoritos</li>
-                    ) : (
-                        favorites.map(f => (
-                            <li
-                                key={`${f.type}-${f.uid}`}
-                                className="p-2 hover:bg-gray-100"
-                            >
-                                <Link to={`/${f.type}/${f.uid}`}>
-                                    {f.name}
-                                </Link>
-                            </li>
-                        ))
-                    )}
-                </ul>
-            )}
-        </div>
-    )
+  return (
+    <Dropdown className="me-3">
+      <Dropdown.Toggle variant="primary">
+        Mis Favoritos <Badge bg="light" text="dark">{favorites.length}</Badge>
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+        {favorites.length === 0
+          ? <Dropdown.Item disabled>Sin favoritos</Dropdown.Item>
+          : favorites.map(f => (
+            <Dropdown.Item as={Link} to={`/${f.type}/${f.uid}`} key={`${f.type}-${f.uid}`}>
+              {f.name}
+            </Dropdown.Item>
+          ))
+        }
+      </Dropdown.Menu>
+    </Dropdown>
+  );
 }

@@ -1,20 +1,19 @@
-import React from 'react'
-import { useFavorites } from '../context/FavoritesContext'
+// src/components/FavoriteButton.jsx
+import React from 'react';
+import { Button } from 'react-bootstrap';
+import { useFavorites } from '../context/FavoritesContext';
 
 export default function FavoriteButton({ item }) {
-    const { favorites, toggleFavorite } = useFavorites()
-    const isFav = favorites.some(
-        f => f.uid === item.uid && f.type === item.type
-    )
+  const { favorites, toggleFavorite } = useFavorites();
+  const isFav = favorites.some(f => f.uid === item.uid && f.type === item.type);
 
-    return (
-        <button
-            onClick={() => toggleFavorite(item)}
-            className={`mt-1 px-2 py-1 rounded ${
-                isFav ? 'bg-red-500 text-white' : 'bg-gray-200'
-            }`}
-        >
-            {isFav ? '★ Favorito' : '☆ Añadir'}
-        </button>
-    )
+  return (
+    <Button
+      size="sm"
+      onClick={() => toggleFavorite(item)}
+      variant={isFav ? 'danger' : 'outline-secondary'}
+    >
+      {isFav ? '★ Favorito' : '☆ Añadir'}
+    </Button>
+  );
 }

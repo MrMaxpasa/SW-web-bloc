@@ -1,0 +1,29 @@
+:root {
+  --bs-primary: #1a202c;   /* un gris oscuro estilo Estrella de la Muerte */
+  --bs-secondary: #f5f5f5; /* un gris claro para fondos */
+  --bs-success: #0d6efd;   /* un azul para destacar acciones */
+}
+
+body {
+  background-color: var(--bs-secondary);
+}
+
+.star-wars-app {
+  background: radial-gradient(circle at 50% 50%, #000 0%, #010101 100%);
+  color: #feda4a; /* amarillo clásico */
+  font-family: 'Pathway Gothic One', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.star-wars-container {
+  flex: 1;
+  padding: 2rem;
+  border: 1px solid #feda4a;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 20px rgba(254, 218, 74, 0.7);
+}
+
+/* Importa el font en tu index.html o con @import */
+@import url('https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap');
