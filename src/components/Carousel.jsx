@@ -1,14 +1,13 @@
-// src/components/Carousel.jsx
-import React from 'react'
-import { Carousel, Row, Col, Card, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-import FavoriteButton from './FavoriteButton'
+import React from 'react';
+import { Carousel, Row, Col, Card, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import FavoriteButton from './FavoriteButton';
 
 export default function SWCarousel({ items, title }) {
-  // Partir el array en grupos de 4
-  const chunks = []
+  // Dividir el array en grupos de 4
+  const chunks = [];
   for (let i = 0; i < items.length; i += 4) {
-    chunks.push(items.slice(i, i + 4))
+    chunks.push(items.slice(i, i + 4));
   }
 
   return (
@@ -32,6 +31,7 @@ export default function SWCarousel({ items, title }) {
                       variant="top"
                       src={`https://starwars-visualguide.com/assets/img/${item.type}/${item.uid}.jpg`}
                       alt={item.name}
+                      loading="lazy"
                     />
                     <Card.Body className="d-flex flex-column">
                       <Card.Title className="fs-6">{item.name}</Card.Title>
@@ -55,5 +55,5 @@ export default function SWCarousel({ items, title }) {
         ))}
       </Carousel>
     </section>
-  )
+  );
 }
