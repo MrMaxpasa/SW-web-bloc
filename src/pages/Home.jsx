@@ -1,16 +1,26 @@
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import React from 'react'
+import { useFetchSWAPI } from '../hooks/useFetchSWAPI'
+import Carousel from '../components/Carousel'
 
-export const Home = () => {
+export default function Home() {
+    const { data: characters } = useFetchSWAPI('people')
+    const { data: starships } = useFetchSWAPI('starships')
+    const { data: planets } = useFetchSWAPI('planets')
 
-  const {store, dispatch} =useGlobalReducer()
-
-	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-		</div>
-	);
-}; 
+    return (
+        <div className="space-y-8">
+            <Carousel
+                items={characters.map(c => ({ ...c, type: 'characters' }))}
+                title="Personajes"
+            />
+            <Carousel
+                items={starships.map(s => ({ ...s, type: 'starships' }))}
+                title="Naves"
+            />
+            <Carousel
+                items={planets.map(p => ({ ...p, type: 'planets' }))}
+                title="Planetas"
+            />
+        </div>
+    )
+}
