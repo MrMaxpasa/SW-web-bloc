@@ -1,4 +1,3 @@
-// src/components/FavoriteDropdown.jsx
 import React from 'react';
 import { Dropdown, Badge } from 'react-bootstrap';
 import { useFavorites } from '../context/FavoritesContext';
@@ -9,7 +8,10 @@ export default function FavoriteDropdown() {
 
   return (
     <Dropdown className="me-3">
-      <Dropdown.Toggle variant="primary">
+      <Dropdown.Toggle
+        as="button"
+        className="favorite-dropdown-toggle"
+      >
         Mis Favoritos <Badge bg="light" text="dark">{favorites.length}</Badge>
       </Dropdown.Toggle>
       <Dropdown.Menu>

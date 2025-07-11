@@ -1,29 +1,125 @@
 :root {
-  --bs-primary: #1a202c;   /* un gris oscuro estilo Estrella de la Muerte */
-  --bs-secondary: #f5f5f5; /* un gris claro para fondos */
-  --bs-success: #0d6efd;   /* un azul para destacar acciones */
+  --bs-primary: #1a202c;   /* gris oscuro estilo Estrella de la Muerte */
+  --bs-secondary: #1a1a1a; /* tono más oscuro para fondo general */
+  --bs-success: #0d6efd;   /* azul para acciones destacadas */
+  --sw-text: #feda4a;      /* amarillo clásico Star Wars */
+  --sw-container-bg: rgba(0, 0, 0, 0.6); /* fondo semitransparente panel */
+  --sw-border: rgba(254, 218, 74, 0.5);
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap');
+
 body {
-  background-color: var(--bs-secondary);
+  margin: 0;
+  background: #0c0c20;
+  color: var(--sw-text);
+  font-family: 'Pathway Gothic One', sans-serif;
 }
 
 .star-wars-app {
-  background: radial-gradient(circle at 50% 50%, #000 0%, #010101 100%);
-  color: #feda4a; /* amarillo clásico */
-  font-family: 'Pathway Gothic One', sans-serif;
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, #000 0%, #010101 100%), url('https://i.imgur.com/8IhZb5P.png') repeat;
+  background-size: cover;
+  color: var(--sw-text);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .star-wars-container {
   flex: 1;
+  margin: 1rem;
   padding: 2rem;
-  border: 1px solid #feda4a;
-  border-radius: 0.5rem;
-  box-shadow: 0 0 20px rgba(254, 218, 74, 0.7);
+  background: var(--sw-container-bg);
+  backdrop-filter: blur(5px);
+  border: 1px solid var(--sw-border);
+  border-radius: 1rem;
+  box-shadow: 0 0 30px 2px rgba(254, 218, 74, 0.7);
 }
 
-/* Importa el font en tu index.html o con @import */
-@import url('https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap');
+/* Estilos de botones con efecto neón */
+.btn-outline-secondary {
+  color: var(--sw-text);
+  border-color: var(--sw-text);
+  transition: background 0.3s, color 0.3s;
+}
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+  background: var(--sw-text);
+  color: #000;
+}
+
+.btn-danger {
+  background-color: #e02;
+  border: none;
+  box-shadow: 0 0 8px #e02;
+}
+.btn-danger:hover {
+  background-color: #c02;
+  box-shadow: 0 0 12px #c02;
+}
+
+/* Ajustes para controles del carrusel con flechas visibles */
+.carousel {
+  position: relative;
+  padding: 0 3rem;
+}
+.carousel .carousel-inner {
+  padding: 0 0.5rem;
+}
+.carousel-control-prev,
+.carousel-control-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.5rem;
+  height: 2.5rem;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  transition: background 0.3s;
+}
+.carousel-control-prev {
+  left: 0.5rem;
+}
+.carousel-control-next {
+  right: 0.5rem;
+}
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+.carousel-control-prev-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23feda4a' viewBox='0 0 16 16'%3E%3Cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3E%3C/svg%3E");
+}
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23feda4a' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 1.646a.5.5 0 0 0 0 .708L10.293 8l-5.647 5.646a.5.5 0 0 0 .708.708l6-6a.5.5 0 0 0 0-.708l-6-6a.5.5 0 0 0-.708 0z'/%3E%3C/svg%3E");
+}
+
+/* Botón de favoritos estilo espacial */
+.favorite-dropdown-toggle {
+  background: linear-gradient(45deg, #feda4a, #d4af37);
+  border: 2px solid #feda4a;
+  color: #0c0c20 !important;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  box-shadow: 0 0 8px rgba(254, 218, 74, 0.7);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.favorite-dropdown-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(254, 218, 74, 1);
+}
