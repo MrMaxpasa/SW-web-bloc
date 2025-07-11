@@ -10,11 +10,28 @@ const resourceMap = {
   characters: 'people',
   starships: 'starships',
   planets: 'planets',
+  vehicles: 'vehicles',
+};
+
+// Función para obtener la URL de la imagen según el tipo
+const getImageSrc = (type, uid) => {
+  if (type === 'characters') {
+    return `https://raw.githubusercontent.com/breatheco-de/swapi-images/master/public/images/people/${uid}.jpg`;
+  }
+  if (type === 'planets') {
+    return `https://raw.githubusercontent.com/breatheco-de/swapi-images/master/public/images/planets/${uid}.jpg`;
+  }
+  if (type === 'vehicles') {
+    return `https://raw.githubusercontent.com/breatheco-de/swapi-images/master/public/images/vehicles/${uid}.jpg`;
+  }
+  // Por defecto:
+  return `https://starwars-visualguide.com/assets/img/${type}/${uid}.jpg`;
 };
 
 export default function Detail() {
   const { type, uid } = useParams();
   const resource = resourceMap[type] || type;
+  const storageKey = `swapi-${type}-${uid}`;
 
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -23,11 +40,32 @@ export default function Detail() {
   useEffect(() => {
     setLoading(true);
     setError(null);
+
+    // Intentar cargar desde localStorage
+    const cached = localStorage.getItem(storageKey);
+    if (cached) {
+      try {
+        const parsed = JSON.parse(cached);
+        setItem(parsed);
+        setLoading(false);
+        return; // No hacer fetch si está en cache
+      } catch {
+        // Si falla parseo, continuar con fetch
+      }
+    }
+
+    // Fetch a la API y guardar en localStorage
     axios
       .get(`https://www.swapi.tech/api/${resource}/${uid}`)
       .then(res => {
-        // La respuesta viene en res.data.result
-        setItem(res.data.result);
+        const result = res.data.result;
+        setItem(result);
+        // Guardar en localStorage
+        try {
+          localStorage.setItem(storageKey, JSON.stringify(result));
+        } catch {
+          // Si falla almacenamiento, ignorar
+        }
       })
       .catch(err => {
         setError(err);
@@ -35,7 +73,7 @@ export default function Detail() {
       .finally(() => {
         setLoading(false);
       });
-  }, [resource, uid]);
+  }, [resource, uid, storageKey]);
 
   if (loading) {
     return (
@@ -69,7 +107,7 @@ export default function Detail() {
       <Card className="bg-dark text-light mb-4">
         <Card.Img
           variant="top"
-          src={`https://starwars-visualguide.com/assets/img/${resource}/${uid}.jpg`}
+          src={getImageSrc(type, uid)}
           alt={properties.name}
           loading="lazy"
           onError={e => { e.target.src = '/placeholder.png'; }}
@@ -89,7 +127,7 @@ export default function Detail() {
         </Card.Body>
       </Card>
 
-      {/* Si quieres mostrar otros datos de res.data (como URL, timestamps, etc.) */}
+      {/* Meta */}
       <Card className="bg-secondary text-light">
         <Card.Header>Meta</Card.Header>
         <ListGroup variant="flush">

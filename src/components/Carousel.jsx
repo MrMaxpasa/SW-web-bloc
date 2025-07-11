@@ -10,6 +10,20 @@ export default function SWCarousel({ items, title }) {
     chunks.push(items.slice(i, i + 4));
   }
 
+  // Función para obtener la URL de la imagen según el tipo
+  const getImageSrc = (item) => {
+    if (item.type === 'characters') {
+      // Usar imágenes de breatheco-de para personajes
+      return `https://raw.githubusercontent.com/breatheco-de/swapi-images/master/public/images/people/${item.uid}.jpg`;
+    }
+    if (item.type === 'planets') {
+      // Usar imágenes de breatheco-de para planetas
+      return `https://raw.githubusercontent.com/breatheco-de/swapi-images/master/public/images/planets/${item.uid}.jpg`;
+    }
+    // URL por defecto para otros tipos
+    return `https://raw.githubusercontent.com/breatheco-de/swapi-images/master/public/images/vehicles/${item.uid}.jpg`;
+  };
+
   return (
     <section className="mb-5">
       <h3 className="mb-3 text-warning">{title}</h3>
@@ -29,7 +43,7 @@ export default function SWCarousel({ items, title }) {
                   <Card className="h-100 bg-dark text-light shadow border-0">
                     <Card.Img
                       variant="top"
-                      src={`https://starwars-visualguide.com/assets/img/${item.type}/${item.uid}.jpg`}
+                      src={getImageSrc(item)}
                       alt={item.name}
                       loading="lazy"
                     />

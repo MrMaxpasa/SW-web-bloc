@@ -1,11 +1,10 @@
-// src/pages/Home.jsx
 import React from 'react'
 import { useFetchSWAPI } from '../hooks/useFetchSWAPI'
 import SWCarousel from '../components/Carousel'
 
 export default function Home() {
   const { data: characters } = useFetchSWAPI('people')
-  const { data: starships } = useFetchSWAPI('starships')
+  const { data: vehicles } = useFetchSWAPI('vehicles')
   const { data: planets } = useFetchSWAPI('planets')
 
   return (
@@ -15,8 +14,8 @@ export default function Home() {
         title="Personajes"
       />
       <SWCarousel
-        items={starships.map(s => ({ ...s, type: 'starships' }))}
-        title="Naves"
+        items={vehicles.map(v => ({ ...v, type: 'vehicles' }))}
+        title="Vehículos"
       />
       <SWCarousel
         items={planets.map(p => ({ ...p, type: 'planets' }))}
